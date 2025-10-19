@@ -21,8 +21,9 @@ public class Application {
             } else {
                 inputSplit = splitByDefaultDelimiter(input);
             }
-
-            System.out.println(Arrays.toString(inputSplit));
+            
+            result = sumNum(inputSplit);
+            output(result);
         }
     }
 
@@ -46,5 +47,12 @@ public class Application {
         String numbers = input.substring(end + 2);
 
         return numbers.split(between);
+    }
+
+    public static int sumNum(String[] inputSplit) {
+        int numberSum = Arrays.stream(inputSplit)
+                .mapToInt(Integer::parseInt)
+                .sum();
+        return numberSum;
     }
 }
