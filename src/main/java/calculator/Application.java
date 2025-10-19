@@ -1,5 +1,7 @@
 package calculator;
 
+import calculator.controller.CalculatorController;
+import calculator.model.Calculator;
 import camp.nextstep.edu.missionutils.Console;
 
 import java.util.Arrays;
@@ -8,8 +10,8 @@ import java.util.regex.Pattern;
 public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
-        System.out.println("덧셈할 문자열을 입력해 주세요.");
-        String input = Console.readLine();
+        CalculatorController calculatorController = new CalculatorController();
+        String input = calculatorController.run();
 
         int result = 0;
 
