@@ -15,10 +15,15 @@ public class Application {
         if (isNull(input)) {
             output(result);
         } else {
-            String[] inputSplit = splitByDefaultDelimiter(input);
+            String[] inputSplit;
+            if (input.contains("//") && input.contains("\\n")) {
+                inputSplit = splitByCustomDelimiter(input);
+            } else {
+                inputSplit = splitByDefaultDelimiter(input);
+            }
+
             System.out.println(Arrays.toString(inputSplit));
         }
-        // TODO: 커스텀 구분자로 문자열 분리
     }
 
     public static void output(int result) {
@@ -31,5 +36,15 @@ public class Application {
 
     public static String[] splitByDefaultDelimiter(String input) {
         return input.split("[,:]");
+    }
+
+    public static String[] splitByCustomDelimiter(String input) {
+        int start = input.indexOf("//");
+        int end = input.indexOf("\\n");
+
+        String between = input.substring(start + 2, end);
+        String numbers = input.substring(end + 2);
+
+        return numbers.split(between);
     }
 }
