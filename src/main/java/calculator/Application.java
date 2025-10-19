@@ -2,6 +2,8 @@ package calculator;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.Arrays;
+
 public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
@@ -9,10 +11,14 @@ public class Application {
         String input = Console.readLine();
 
         int result = 0;
-        if (!isNull(input)) {
-            result = Integer.parseInt(input);
+
+        if (isNull(input)) {
+            output(result);
+        } else {
+            String[] inputSplit = splitByDefaultDelimiter(input);
+            System.out.println(Arrays.toString(inputSplit));
         }
-        output(result);
+        // TODO: 커스텀 구분자로 문자열 분리
     }
 
     public static void output(int result) {
@@ -21,5 +27,9 @@ public class Application {
 
     public static boolean isNull(String input) {
         return input == null || input.isEmpty();
+    }
+
+    public static String[] splitByDefaultDelimiter(String input) {
+        return input.split("[,:]");
     }
 }
