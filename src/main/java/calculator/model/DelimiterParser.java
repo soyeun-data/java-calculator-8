@@ -23,30 +23,19 @@ public class DelimiterParser {
     }
 
     public boolean isCustomDelimiter(String input) {
-        isValidCustomDelimiter(input);
         return input.contains("//") && input.contains("\\n");
     }
 
-    public void isValidCustomDelimiter(String input) {
-        int start = input.indexOf("//");
-        int end = input.indexOf("\\n");
 
-        if (start == -1 || end == -1 || end <= start + 2) {
-            throw new IllegalArgumentException("커스텀 구분자가 잘못되었습니다.");
-        }
 
-        if (start > 0) {
-            throw new IllegalArgumentException("커스텀 구분자가 처음부터 시작하지 않습니다.");
-        }
-    }
-
-    public static String[] splitByDefaultDelimiter(String input) {
+    public String[] splitByDefaultDelimiter(String input) {
         return input.split("[,:]");
     }
-
-    public static String[] splitByCustomDelimiter(String input) {
+    public String[] splitByCustomDelimiter(String input) {
         int start = input.indexOf("//");
         int end = input.indexOf("\\n");
+
+        isValidCustomDelimiter(start, end);
 
         String between = input.substring(start + 2, end);
         isValidBetween(between);
@@ -56,7 +45,7 @@ public class DelimiterParser {
         return numbers.split(Pattern.quote(between));
     }
 
-    public static void isValidBetween(String between) {
+    public void isValidBetween(String between) {
         if (between.isEmpty()) {
             throw new IllegalArgumentException("커스텀 구분자가 존재하지 않습니다.");
         }
@@ -67,6 +56,16 @@ public class DelimiterParser {
 
         if (between.matches("\\d+")) {
             throw new IllegalArgumentException("커스텀 구분자가 숫자입니다.");
+        }
+    }
+
+    public void isValidCustomDelimiter(int start, int end) {
+        if (start == -1 || end == -1 || end <= start + 2) {
+            throw new IllegalArgumentException("커스텀 구분자가 잘못되었습니다.");
+        }
+
+        if (start > 0) {
+            throw new IllegalArgumentException("커스텀 구분자가 처음부터 시작하지 않습니다.");
         }
     }
 }
