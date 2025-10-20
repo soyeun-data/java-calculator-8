@@ -13,8 +13,10 @@ public class DelimiterParser {
 
         if (isCustomDelimiter(input)) {
             return splitByCustomDelimiter(input);
-        } else {
+        } else if (isDefaultDelimiter(input)) {
             return splitByDefaultDelimiter(input);
+        } else{
+            throw new IllegalArgumentException("커스텀 구분자가 잘못되었습니다.");
         }
     }
 
@@ -26,7 +28,9 @@ public class DelimiterParser {
         return input.contains("//") && input.contains("\\n");
     }
 
-
+    public boolean isDefaultDelimiter(String input) {
+        return !input.contains("//") && !input.contains("\\n");
+    }
 
     public String[] splitByDefaultDelimiter(String input) {
         return input.split("[,:]");
@@ -60,10 +64,6 @@ public class DelimiterParser {
     }
 
     public void isValidCustomDelimiter(int start, int end) {
-        if (start == -1 || end == -1 || end <= start + 2) {
-            throw new IllegalArgumentException("커스텀 구분자가 잘못되었습니다.");
-        }
-
         if (start > 0) {
             throw new IllegalArgumentException("커스텀 구분자가 처음부터 시작하지 않습니다.");
         }
